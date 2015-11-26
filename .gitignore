@@ -1,11 +1,29 @@
-# Build and Release Folders
-bin/
-bin-debug/
-bin-release/
+*.csproj
+*.pidb
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+.vs
 
-# Other files and folders
-.settings/
+# Unity3D generated meta files
+*.pidb.meta
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# Unity3D Generated File On Crash Reports
+sysinfo.txt
+
+Builds/
+Library/
+Temp/
+Assets/Editor
+Assets/HorrorEnvironment_AbandonedManor
+Assets/SampleScenes
+Assets/Standard Assets
+
+Assets/Editor.meta
+Assets/HorrorEnvironment_AbandonedManor.meta
+Assets/SampleScenes.meta
+Assets/Standard Assets.meta
