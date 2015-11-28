@@ -75,6 +75,14 @@ public class Crosshair : MonoBehaviour {
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupFlashlight();
                 print("You picked up a flashlight!");
             }
+
+            // If you target bookStand_Hall
+            if ((hitInfo.collider.name == "bookStand_Hall") && Input.GetButtonDown("Interact"))
+            {
+                print("I never read any books");
+                //GameObject.Find("PopUp").GetComponent<PopUpScript>().Show("helelel");
+            }
+
         }
         else {
 
