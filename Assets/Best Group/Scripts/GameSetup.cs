@@ -7,7 +7,7 @@ public class GameSetup : MonoBehaviour {
     private bool shown;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         GameObject.Find("Plane").GetComponent<Fade>().fadeIn(3f, false);
         popUpScript = GameObject.Find("PopUp").GetComponent<PopUpScript>();
         popUpScript.Hide();

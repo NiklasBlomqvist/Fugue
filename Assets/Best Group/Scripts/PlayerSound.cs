@@ -6,7 +6,7 @@ public class PlayerSound : MonoBehaviour
 
     private CharacterController controller;
     private AudioClip[] clips;
-    public AudioSource audio;
+    public AudioSource sound;
     private Vector3 moveDirection = Vector3.zero;
     private float travelled = 0.0f;
     public float stepLength = 0.5f;
@@ -48,11 +48,11 @@ public class PlayerSound : MonoBehaviour
             if (travelled > stepLength)
             {
                 int n = Random.Range(1, clips.Length);
-                audio.clip = clips[n];
-                audio.Play();
+                sound.clip = clips[n];
+                sound.Play();
                 travelled = 0;
                 clips[n] = clips[0];
-                clips[0] = audio.clip;
+                clips[0] = sound.clip;
             }
         }
 
