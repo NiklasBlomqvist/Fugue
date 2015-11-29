@@ -48,11 +48,11 @@ public class PlayerSound : MonoBehaviour
             if (travelled > stepLength)
             {
                 int n = Random.Range(1, clips.Length);
-                /*sound.clip = clips[n];
+                sound.clip = clips[n];
                 sound.Play();
                 travelled = 0;
                 clips[n] = clips[0];
-                clips[0] = sound.clip;*/
+                clips[0] = sound.clip;
             }
         }
 
