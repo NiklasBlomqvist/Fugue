@@ -3,14 +3,13 @@ using System.Collections;
 
 public class GameSetup : MonoBehaviour {
 
-    private PopUpScript popUpScript;
     private bool shown;
+    private ModalPanel modalPanel;
 
     // Use this for initialization
     void Awake () {
         GameObject.Find("Plane").GetComponent<Fade>().fadeIn(3f, false);
-        popUpScript = GameObject.Find("PopUp").GetComponent<PopUpScript>();
-        popUpScript.Hide();
+        modalPanel = ModalPanel.Instance();
         shown = false;
     }
 	
@@ -20,18 +19,7 @@ public class GameSetup : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.U))
         {
 
-            if (!shown)
-            {
-                popUpScript.Show("test");
-                Debug.Log("show");
-                shown = true;
-            }
-            else
-            {
-                popUpScript.Hide();
-                Debug.Log("hide");
-                shown = false;
-            }
+            modalPanel.Choice("Testing", 1f, 1f);
 
         }
 

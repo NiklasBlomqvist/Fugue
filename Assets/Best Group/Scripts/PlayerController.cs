@@ -68,7 +68,8 @@ public class PlayerController : MonoBehaviour {
         // Turn off application on escape
         if (Input.GetKey("escape"))
         {
-            Application.Quit();
+            //Return to main menu
+            Application.LoadLevel(0);
         }
 
     }
