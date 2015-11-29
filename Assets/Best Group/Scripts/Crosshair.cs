@@ -12,6 +12,14 @@ public class Crosshair : MonoBehaviour {
     // Information about what is hit
     private RaycastHit hitInfo;
 
+    private ModalPanel modalPanel;
+
+    // Use this for initialization
+    void Awake()
+    {
+        modalPanel = ModalPanel.Instance();
+    }
+
     void OnGUI()
     {
         //if not paused
@@ -72,13 +80,13 @@ public class Crosshair : MonoBehaviour {
             // If you target bookStand_Hall
             if ((hitInfo.collider.name == "bookStand_Hall") && Input.GetButtonDown("Interact"))
             {
-                print("I never read any books..");
+                modalPanel.Choice("I never read any books..", 2f, 1f);
             }
 
             // If you target Picture of woman in Guestroom
             if ((hitInfo.collider.name == "WomanPicture") && Input.GetButtonDown("Interact"))
             {
-                print("Who is this woman?");
+                modalPanel.Choice("Who is this woman? I remember.. something..", 2f, 1f);
             }
 
             // If you target a TableLamp -> turn on/off
@@ -88,13 +96,11 @@ public class Crosshair : MonoBehaviour {
             }
 
             // If you target the Drawer in workroom (get flashlight)
-            /*if ((hitInfo.collider.name == "DrawerWorkroom") && Input.GetButtonDown("Interact"))
+            if ((hitInfo.collider.name == "FlashlightDrawer") && Input.GetButtonDown("Interact"))
             {
-                print("You picked up a flashlight.");
-                hitInfo.collider.GetComponent<Animation>().Play();
-                GameObject.Find("DrawerWorkroom").GetComponent<Animation>().Play();
+                modalPanel.Choice("You picked up a flashlight. Press 'F' to use it. ", 3f, 1f);
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupFlashlight();
-            }*/
+            }
 
         }
         else {
