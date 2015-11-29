@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour {
     IEnumerator freeze()
     {
         frozen = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         frozen = false;
     }
 }

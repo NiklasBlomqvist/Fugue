@@ -46,7 +46,7 @@ public class Crosshair : MonoBehaviour {
         // Saves the vector the fps-controller is pointing at
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
-        if (Physics.Raycast(transform.position, fwd, out hitInfo, 2.0f) && hitInfo.collider.CompareTag("Clickable"))
+        if (Physics.Raycast(transform.position, fwd, out hitInfo, 2.5f) && hitInfo.collider.CompareTag("Clickable"))
         {
             // Updates the crosshair if the ray hits a object tagged "Clickable"
             crosshairTexture = crosshairTextureActive;
@@ -69,18 +69,32 @@ public class Crosshair : MonoBehaviour {
                 print("FlickerCube");
             }
 
-            // If you target FlashlightSphere
-            if ((hitInfo.collider.name == "FlashlightSphere") && Input.GetButtonDown("Interact"))
-            {
-                GameObject.Find("Inventory").GetComponent<Inventory>().pickupFlashlight();
-                print("You picked up a flashlight!");
-            }
-
             // If you target bookStand_Hall
             if ((hitInfo.collider.name == "bookStand_Hall") && Input.GetButtonDown("Interact"))
             {
-                print("I never read any books");
+                print("I never read any books..");
             }
+
+            // If you target Picture of woman in Guestroom
+            if ((hitInfo.collider.name == "WomanPicture") && Input.GetButtonDown("Interact"))
+            {
+                print("Who is this woman?");
+            }
+
+            // If you target a TableLamp -> turn on/off
+            if ((hitInfo.collider.name == "TableLamp") && Input.GetButtonDown("Interact"))
+            {
+                hitInfo.collider.GetComponentInChildren<Light>().enabled = !hitInfo.collider.GetComponentInChildren<Light>().enabled;
+            }
+
+            // If you target the Drawer in workroom (get flashlight)
+            /*if ((hitInfo.collider.name == "DrawerWorkroom") && Input.GetButtonDown("Interact"))
+            {
+                print("You picked up a flashlight.");
+                hitInfo.collider.GetComponent<Animation>().Play();
+                GameObject.Find("DrawerWorkroom").GetComponent<Animation>().Play();
+                GameObject.Find("Inventory").GetComponent<Inventory>().pickupFlashlight();
+            }*/
 
         }
         else {
