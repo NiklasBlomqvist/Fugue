@@ -39,9 +39,9 @@ public class Crosshair : MonoBehaviour {
         // Initiate the crosshair
         crosshairTexture = crosshairTextureNonActive;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
         // Saves the vector the fps-controller is pointing at
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -80,7 +80,6 @@ public class Crosshair : MonoBehaviour {
             if ((hitInfo.collider.name == "bookStand_Hall") && Input.GetButtonDown("Interact"))
             {
                 print("I never read any books");
-                //GameObject.Find("PopUp").GetComponent<PopUpScript>().Show("helelel");
             }
 
         }

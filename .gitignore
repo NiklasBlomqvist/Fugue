@@ -8,6 +8,8 @@
 *.pidb
 *.booproj
 .vs
+*.rar
+*.rar.meta
 
 # Unity3D generated meta files
 *.pidb.meta
