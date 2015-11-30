@@ -36,9 +36,11 @@ public class BedroomDarknessTrigger : MonoBehaviour
     IEnumerator waitOpen()
     {
         triggerHappened = true;
-        yield return new WaitForSeconds(5.0f);
+        GameObject.Find("Flashlight").GetComponent<Flashlight>().flicker();
 
-        if(GameObject.Find("Flashlight").GetComponent<Flashlight>().flashlightOn)
+        yield return new WaitForSeconds(10.0f);
+
+        if (GameObject.Find("Flashlight").GetComponent<Flashlight>().flashlightOn)
         {
             GameObject.Find("BedroomDoor").GetComponent<OpenDoor>().unlockDoor();
             GameObject.Find("BedroomDoor").GetComponent<OpenDoor>().openDoor();
