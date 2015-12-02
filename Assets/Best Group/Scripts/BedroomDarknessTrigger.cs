@@ -5,11 +5,14 @@ public class BedroomDarknessTrigger : MonoBehaviour
 {
     private float originalAmbientIntensity;
     private bool triggerHappened = false;
+    GameObject ghost;
 
     // Use this for initialization
     void Start()
     {
         originalAmbientIntensity = RenderSettings.ambientIntensity;
+        ghost = GameObject.Find("Ghost");
+        ghost.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,6 +40,10 @@ public class BedroomDarknessTrigger : MonoBehaviour
     {
         triggerHappened = true;
         GameObject.Find("Flashlight").GetComponent<Flashlight>().flicker();
+
+        ghost.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        ghost.SetActive(false);
 
         yield return new WaitForSeconds(20.0f);
 
