@@ -102,7 +102,7 @@ public class Crosshair : MonoBehaviour {
             // If you target Picture of woman in Guestroom
             if ((hitInfo.collider.name == "WomanPicture") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("Who is this woman? I remember.. something..", 2f, 1f);
+                modalPanel.Choice("Who is this woman? I recognize her..", 2f, 1f);
             }
 
             // If you target a TableLamp -> turn on/off

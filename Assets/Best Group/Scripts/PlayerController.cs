@@ -14,23 +14,24 @@ public class PlayerController : MonoBehaviour {
 
     private Vector3 startPosition;
 
+    CharacterController controller;
+
     // Use this for initialization
     void Start () {
         startPosition = transform.position;
+        // Get the controller
+        controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update () {
 
-        // Get the controller
-        CharacterController controller = GetComponent<CharacterController>();
-
         // Check if the controller is on the ground
         if (controller.isGrounded && !frozen)
         {
 
-            moveDirection = transform.forward * Input.GetAxis("Vertical");
-            moveDirection += transform.right * Input.GetAxis("Horizontal");
+            moveDirection = -1 * transform.right * Input.GetAxis("Vertical");
+            moveDirection += transform.forward * Input.GetAxis("Horizontal");
 
             // If moveDirection vector is better than 1, normalize it so it doesn't go faster walking diagonally
             if(moveDirection.magnitude > 1)
