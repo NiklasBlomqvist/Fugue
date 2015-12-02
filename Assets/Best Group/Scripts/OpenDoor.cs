@@ -4,15 +4,17 @@ using System.Collections;
 public class OpenDoor : MonoBehaviour {
     bool isOpen = false;
     public bool locked = false;
-    AudioSource doorOpen;
-    AudioSource doorClose;
+    public AudioSource audioSource;
+    private AudioClip doorOpenSound;
+    private AudioClip doorCloseSound;
+    private AudioClip doorSlamSound;
 
     // Use this for initialization
 
     void Start () {
-        AudioSource[] audios = GetComponents<AudioSource>();
-        doorOpen = audios[0];
-        doorClose = audios[1];
+        doorOpenSound = Resources.Load<AudioClip>("doorOpen");
+        doorCloseSound = Resources.Load<AudioClip>("doorClose");
+        doorSlamSound = Resources.Load<AudioClip>("doorSlam");
     }
 	
 	// Update is called once per frame
@@ -31,7 +33,8 @@ public class OpenDoor : MonoBehaviour {
             GetComponent<Animation>()["OpenDoor"].speed = 1.0f;
             GetComponent<Animation>().Play();
 
-            doorOpen.Play();
+            audioSource.clip = doorOpenSound;
+            audioSource.Play();
 
             isOpen = true;
         }
@@ -44,7 +47,8 @@ public class OpenDoor : MonoBehaviour {
             GetComponent<Animation>()["OpenDoor"].speed = -1.0f;
             GetComponent<Animation>().Play();
 
-            doorClose.PlayDelayed(0.25f);
+            audioSource.clip = doorCloseSound;
+            audioSource.PlayDelayed(0.35f);
 
             isOpen = false;
         }
@@ -59,6 +63,9 @@ public class OpenDoor : MonoBehaviour {
             GetComponent<Animation>()["OpenDoor"].speed = -3.0f;
             locked = true;
             GetComponent<Animation>().Play();
+
+            audioSource.clip = doorSlamSound;
+            audioSource.Play();
         }
         else
         {

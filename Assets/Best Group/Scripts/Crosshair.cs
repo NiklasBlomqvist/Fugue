@@ -14,10 +14,25 @@ public class Crosshair : MonoBehaviour {
 
     private ModalPanel modalPanel;
 
+    public AudioSource audioSource;
+    private AudioClip lampOnSound;
+    private AudioClip lampOffSound;
+    private AudioClip doorLockedSound;
+    private AudioClip itemPickupSound;
+    private AudioClip breathingSound1;
+    private AudioClip breathingSound2;
+
+
     // Use this for initialization
     void Awake()
     {
         modalPanel = ModalPanel.Instance();
+        lampOnSound = Resources.Load<AudioClip>("lampOn");
+        lampOffSound = Resources.Load<AudioClip>("lampOff");
+        doorLockedSound = Resources.Load<AudioClip>("doorLocked");
+        itemPickupSound = Resources.Load<AudioClip>("itemPickup");
+        breathingSound1 = Resources.Load<AudioClip>("breathing1");
+        breathingSound2 = Resources.Load<AudioClip>("breathing2");
     }
 
     void OnGUI()
@@ -78,6 +93,8 @@ public class Crosshair : MonoBehaviour {
                 else
                 {
                     // Play "cannot open sound"
+                    audioSource.clip = doorLockedSound;
+                    audioSource.Play();
                 }
             }
 
@@ -103,11 +120,21 @@ public class Crosshair : MonoBehaviour {
             if ((hitInfo.collider.name == "WomanPicture") && Input.GetButtonDown("Interact"))
             {
                 modalPanel.Choice("Who is this woman? I recognize her..", 2f, 1f);
+                audioSource.PlayOneShot(breathingSound2, 0.7f);
             }
 
             // If you target a TableLamp -> turn on/off
             if ((hitInfo.collider.name == "TableLamp") && Input.GetButtonDown("Interact"))
             {
+                if(!hitInfo.collider.GetComponentInChildren<Light>().enabled)
+                {
+                    audioSource.PlayOneShot(lampOnSound, 0.4f);
+                }
+                else
+                {
+                    audioSource.PlayOneShot(lampOffSound, 0.4f);
+                }
+
                 hitInfo.collider.GetComponentInChildren<Light>().enabled = !hitInfo.collider.GetComponentInChildren<Light>().enabled;
             }
 
@@ -115,20 +142,25 @@ public class Crosshair : MonoBehaviour {
             if ((hitInfo.collider.name == "FlashlightDrawer") && Input.GetButtonDown("Interact"))
             {
                 modalPanel.Choice("A flashlight. This could become useful.", 3f, 1f);
+                audioSource.clip = itemPickupSound;
+                audioSource.Play();
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupFlashlight();
             }
 
             // If you target the armchairs in the livingroom
             if ((hitInfo.collider.name == "Armchair_Livingroom") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("I remember I used to sit here.. why is there two chairs?", 3f, 1f);
+                modalPanel.Choice("I remember I used to sit here.. why are there two chairs?", 3f, 1f);
                 GameObject.Find("Light_Livingroom").GetComponent<LightFlicker>().flicker();
+                audioSource.PlayOneShot(breathingSound1, 0.7f);
             }
 
             // If you target the knife on the desk in the workroom
             if ((hitInfo.collider.name == "Knife") && Input.GetButtonDown("Interact"))
             {
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKnife();
+                audioSource.clip = itemPickupSound;
+                audioSource.Play();
                 GameObject.Find("Knife").SetActive(false);
                 modalPanel.Choice("A knife..", 3f, 1f);
             }
