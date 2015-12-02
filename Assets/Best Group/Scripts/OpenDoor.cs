@@ -3,7 +3,7 @@ using System.Collections;
 
 public class OpenDoor : MonoBehaviour {
     bool isOpen = false;
-    bool isLocked = false;
+    public bool locked = false;
     AudioSource doorOpen;
     AudioSource doorClose;
 
@@ -23,7 +23,7 @@ public class OpenDoor : MonoBehaviour {
     public void openDoor()
     {
         // Open door
-        if(isLocked == false && isOpen == false && !GetComponent<Animation>().IsPlaying("OpenDoor"))
+        if(locked == false && isOpen == false && !GetComponent<Animation>().IsPlaying("OpenDoor"))
         {
 
             // Sets time to start animation, what speed and then plays it
@@ -37,7 +37,7 @@ public class OpenDoor : MonoBehaviour {
         }
 
         // Close door
-        else if (isLocked == false && isOpen == true && !GetComponent<Animation>().IsPlaying("OpenDoor"))
+        else if (locked == false && isOpen == true && !GetComponent<Animation>().IsPlaying("OpenDoor"))
         {
 
             GetComponent<Animation>()["OpenDoor"].time = GetComponent<Animation>()["OpenDoor"].length;
@@ -53,22 +53,26 @@ public class OpenDoor : MonoBehaviour {
     // Close door quickly (slam door)
     public void closeThisDoor()
     {
-        if (isOpen && !isLocked)
+        if (isOpen && !locked)
         {
             GetComponent<Animation>()["OpenDoor"].time = GetComponent<Animation>()["OpenDoor"].length;
             GetComponent<Animation>()["OpenDoor"].speed = -3.0f;
-            isLocked = true;
+            locked = true;
             GetComponent<Animation>().Play();
         }
         else
         {
-            isLocked = true;
+            locked = true;
         }
     }
 
     public void unlockDoor()
     {
-        isLocked = false;
-        isOpen = false;
+        locked = false;
+    }
+
+    public bool isLocked()
+    {
+        return locked;
     }
 }

@@ -59,10 +59,26 @@ public class Crosshair : MonoBehaviour {
             // Updates the crosshair if the ray hits a object tagged "Clickable"
             crosshairTexture = crosshairTextureActive;
 
-            // If you hit "doors_wing_a" open it
+            // If you target a door,  "doors_wing_a"
             if ((hitInfo.collider.name == "doors_wing_a") && Input.GetButtonDown("Interact"))
             {
-                hitInfo.collider.GetComponentInParent<OpenDoor>().openDoor();
+                // If that door is the basement door
+                if(hitInfo.collider.transform.parent.name == "BasementDoor")
+                {
+                    // And you have the key
+                    if (GameObject.Find("Inventory").GetComponent<Inventory>().hasKeyBasement())
+                    {
+                        hitInfo.collider.GetComponentInParent<OpenDoor>().unlockDoor();
+                    }
+                }
+                if (!hitInfo.collider.GetComponentInParent<OpenDoor>().isLocked())
+                {
+                    hitInfo.collider.GetComponentInParent<OpenDoor>().openDoor();
+                }
+                else
+                {
+                    // Play "cannot open sound"
+                }
             }
 
             // If you target Cube1
@@ -109,7 +125,7 @@ public class Crosshair : MonoBehaviour {
                 GameObject.Find("Light_Livingroom").GetComponent<LightFlicker>().flicker();
             }
 
-            // If you target the left door in the desk in the workroom
+            // If you target the knife on the desk in the workroom
             if ((hitInfo.collider.name == "Knife") && Input.GetButtonDown("Interact"))
             {
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKnife();
@@ -130,7 +146,15 @@ public class Crosshair : MonoBehaviour {
                     modalPanel.Choice("There's something in there..", 3f, 1f);
                 }
             }
-            
+
+            // If you target the right door in the desk in the workroom
+            if ((hitInfo.collider.name == "Workroom_Desk_RightDoor") && Input.GetButtonDown("Interact"))
+            {
+                GameObject.Find("Inventory").GetComponent<Inventory>().pickupKeyBasement();
+                modalPanel.Choice("A key. Where does this lead?", 3f, 1f);
+            }
+
+
 
         }
         else {
