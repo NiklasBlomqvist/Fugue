@@ -98,9 +98,39 @@ public class Crosshair : MonoBehaviour {
             // If you target the Drawer in workroom (get flashlight)
             if ((hitInfo.collider.name == "FlashlightDrawer") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("You picked up a flashlight. Press 'F' to use it. ", 3f, 1f);
+                modalPanel.Choice("A flashlight. This could become useful.", 3f, 1f);
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupFlashlight();
             }
+
+            // If you target the armchairs in the livingroom
+            if ((hitInfo.collider.name == "Armchair_Livingroom") && Input.GetButtonDown("Interact"))
+            {
+                modalPanel.Choice("I remember I used to sit here.. why is there two chairs?", 3f, 1f);
+                GameObject.Find("Light_Livingroom").GetComponent<LightFlicker>().flicker();
+            }
+
+            // If you target the left door in the desk in the workroom
+            if ((hitInfo.collider.name == "Knife") && Input.GetButtonDown("Interact"))
+            {
+                GameObject.Find("Inventory").GetComponent<Inventory>().pickupKnife();
+                GameObject.Find("Knife").SetActive(false);
+                modalPanel.Choice("A knife..", 3f, 1f);
+            }
+
+            // If you target the wardrobe in the bedroom
+            if ((hitInfo.collider.name == "Wardrobe") && Input.GetButtonDown("Interact"))
+            {
+                if(GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
+                {
+                    GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
+                }
+
+                else
+                {
+                    modalPanel.Choice("There's something in there..", 3f, 1f);
+                }
+            }
+            
 
         }
         else {

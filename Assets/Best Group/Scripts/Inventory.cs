@@ -3,10 +3,12 @@ using System.Collections;
 
 public class Inventory : MonoBehaviour {
     private bool flashlight;
+    private bool knife;
 
 	// Use this for initialization
 	void Start () {
         flashlight = false;
+        knife = false;
 	}
 	
 	// Update is called once per frame
@@ -23,5 +25,15 @@ public class Inventory : MonoBehaviour {
     public bool hasFlashlight()
     {
         return flashlight;
+    }
+
+    public void pickupKnife()
+    {
+        knife = true;
+    }
+
+    public bool hasKnife()
+    {
+        return knife;
     }
 }

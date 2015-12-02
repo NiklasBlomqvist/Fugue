@@ -38,7 +38,7 @@ public class BedroomDarknessTrigger : MonoBehaviour
         triggerHappened = true;
         GameObject.Find("Flashlight").GetComponent<Flashlight>().flicker();
 
-        yield return new WaitForSeconds(10.0f);
+        yield return new WaitForSeconds(20.0f);
 
         if (GameObject.Find("Flashlight").GetComponent<Flashlight>().flashlightOn)
         {

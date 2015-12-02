@@ -54,15 +54,15 @@ public class Flashlight : MonoBehaviour {
     IEnumerator flickerWait()
     {
         flashlight.enabled = !flashlight.enabled;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.8f);
+        flashlight.enabled = !flashlight.enabled;
+        yield return new WaitForSeconds(0.6f);
         flashlight.enabled = !flashlight.enabled;
         yield return new WaitForSeconds(0.3f);
         flashlight.enabled = !flashlight.enabled;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.4f);
         flashlight.enabled = !flashlight.enabled;
-        yield return new WaitForSeconds(0.2f);
-        flashlight.enabled = !flashlight.enabled;
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.6f);
         flashlight.enabled = !flashlight.enabled;
 
     }
