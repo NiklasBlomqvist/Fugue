@@ -154,6 +154,12 @@ public class Crosshair : MonoBehaviour {
                 modalPanel.Choice("A key. Where does this lead?", 3f, 1f);
             }
 
+            // If you target the desk in the workroom
+            if ((hitInfo.collider.name == "Workroom_Desk") && Input.GetButtonDown("Interact"))
+            {
+                modalPanel.Choice("I used to sit here and work..", 3f, 1f);
+            }
+
 
 
         }
