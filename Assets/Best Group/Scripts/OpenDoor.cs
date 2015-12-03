@@ -62,6 +62,7 @@ public class OpenDoor : MonoBehaviour {
             GetComponent<Animation>()["OpenDoor"].time = GetComponent<Animation>()["OpenDoor"].length;
             GetComponent<Animation>()["OpenDoor"].speed = -3.0f;
             locked = true;
+            isOpen = false;
             GetComponent<Animation>().Play();
 
             audioSource.clip = doorSlamSound;
@@ -81,5 +82,10 @@ public class OpenDoor : MonoBehaviour {
     public bool isLocked()
     {
         return locked;
+    }
+
+    public void lockDoor()
+    {
+        locked = true;
     }
 }

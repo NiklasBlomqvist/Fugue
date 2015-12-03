@@ -69,7 +69,7 @@ public class Crosshair : MonoBehaviour {
         // Saves the vector the fps-controller is pointing at
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
-        if (Physics.Raycast(transform.position, fwd, out hitInfo, 2.5f) && hitInfo.collider.CompareTag("Clickable"))
+        if (Physics.Raycast(transform.position, fwd, out hitInfo, 2.5f) && hitInfo.collider.CompareTag("Clickable") && (RenderSettings.ambientIntensity > 0 || (RenderSettings.ambientIntensity == 0 && GameObject.Find("Flashlight").GetComponent<Flashlight>().isOn())))
         {
             // Updates the crosshair if the ray hits a object tagged "Clickable"
             crosshairTexture = crosshairTextureActive;

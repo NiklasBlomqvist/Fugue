@@ -6,10 +6,13 @@ public class BedroomDarknessTrigger : MonoBehaviour
     private float originalAmbientIntensity;
     private bool triggerHappened = false;
     GameObject ghost;
+    private AudioClip scream;
+    public AudioSource audioSource;
 
     // Use this for initialization
     void Start()
     {
+        scream = Resources.Load<AudioClip>("scream");
         originalAmbientIntensity = RenderSettings.ambientIntensity;
         ghost = GameObject.Find("Ghost");
         ghost.SetActive(false);
@@ -42,20 +45,13 @@ public class BedroomDarknessTrigger : MonoBehaviour
         GameObject.Find("Flashlight").GetComponent<Flashlight>().flicker();
 
         ghost.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
         ghost.SetActive(false);
 
-        yield return new WaitForSeconds(20.0f);
+        yield return new WaitForSeconds(10.0f);
 
-        if (GameObject.Find("Flashlight").GetComponent<Flashlight>().flashlightOn)
-        {
-            GameObject.Find("BedroomDoor").GetComponent<OpenDoor>().unlockDoor();
-            GameObject.Find("BedroomDoor").GetComponent<OpenDoor>().openDoor();
-        }
-        else
-        {
-            GameObject.Find("Player").GetComponent<PlayerController>().restart();
-        }
+        GameObject.Find("BedroomDoor").GetComponent<OpenDoor>().unlockDoor();
+        GameObject.Find("BedroomDoor").GetComponent<OpenDoor>().openDoor();
 
         RenderSettings.ambientIntensity = originalAmbientIntensity;
     }
