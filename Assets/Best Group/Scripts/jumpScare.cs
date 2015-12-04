@@ -35,18 +35,20 @@ public class jumpScare : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            scare = true;
-            audioSource.clip = scream;
-            audioSource.Play();
-            StartCoroutine(wait());
-        }
+
     }
 
     IEnumerator wait()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         scare = false;
+    }
+
+    public void scareStart()
+    {
+        scare = true;
+        audioSource.clip = scream;
+        audioSource.Play();
+        StartCoroutine(wait());
     }
 }

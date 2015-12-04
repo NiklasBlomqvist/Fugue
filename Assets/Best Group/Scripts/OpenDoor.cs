@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class OpenDoor : MonoBehaviour {
-    bool isOpen = false;
+    public bool isOpen = false;
     public bool locked = false;
     public AudioSource audioSource;
     private AudioClip doorOpenSound;
@@ -10,11 +10,22 @@ public class OpenDoor : MonoBehaviour {
     private AudioClip doorSlamSound;
 
     // Use this for initialization
+    void Awake()
+    {
+        if (isOpen)
+        {
+            GetComponent<Animation>()["OpenDoor"].time = 0.0f;
+            GetComponent<Animation>()["OpenDoor"].speed = 1.0f;
+            GetComponent<Animation>().Play();
+        }
+    }
+
 
     void Start () {
         doorOpenSound = Resources.Load<AudioClip>("doorOpen");
         doorCloseSound = Resources.Load<AudioClip>("doorClose");
         doorSlamSound = Resources.Load<AudioClip>("doorSlam");
+
     }
 	
 	// Update is called once per frame
