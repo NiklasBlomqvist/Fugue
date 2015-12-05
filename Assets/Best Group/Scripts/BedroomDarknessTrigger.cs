@@ -14,7 +14,7 @@ public class BedroomDarknessTrigger : MonoBehaviour
     void Start()
     {
         scream = Resources.Load<AudioClip>("scream");
-        breathing = Resources.Load<AudioClip>("femaleBreathing1");
+        breathing = Resources.Load<AudioClip>("rampBreathing2");
         originalAmbientIntensity = RenderSettings.ambientIntensity;
     }
 
@@ -34,6 +34,7 @@ public class BedroomDarknessTrigger : MonoBehaviour
 
             // GameObject.Find("Flashlight").GetComponent<Flashlight>().isOn()
             StartCoroutine(waitOpen());
+            
         }
 
     }
@@ -49,10 +50,9 @@ public class BedroomDarknessTrigger : MonoBehaviour
         // Death scene
         if (!GameObject.Find("Inventory").GetComponent<Inventory>().hasFlashlight())
         {
-            audioSource.clip = breathing;
-            audioSource.Play();
+            audioSource.PlayOneShot(breathing, 0.8f);
 
-            yield return new WaitForSeconds(10.0f);
+            yield return new WaitForSeconds(12.0f);
             GameObject.Find("Camera").GetComponent<jumpScare>().scareStart();
 
             GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);

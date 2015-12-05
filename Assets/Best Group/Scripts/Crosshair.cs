@@ -19,8 +19,10 @@ public class Crosshair : MonoBehaviour {
     private AudioClip lampOffSound;
     private AudioClip doorLockedSound;
     private AudioClip itemPickupSound;
-    private AudioClip breathingSound1;
-    private AudioClip breathingSound2;
+    private AudioClip keyPickupSound;
+    private AudioClip knifePickupSound;
+    private AudioClip singleBreathSound1;
+    private AudioClip singleBreathSound2;
 
 
     // Use this for initialization
@@ -31,8 +33,10 @@ public class Crosshair : MonoBehaviour {
         lampOffSound = Resources.Load<AudioClip>("lampOff");
         doorLockedSound = Resources.Load<AudioClip>("doorLocked");
         itemPickupSound = Resources.Load<AudioClip>("itemPickup");
-        breathingSound1 = Resources.Load<AudioClip>("breathing1");
-        breathingSound2 = Resources.Load<AudioClip>("breathing2");
+        keyPickupSound = Resources.Load<AudioClip>("keyPickup1");
+        knifePickupSound = Resources.Load<AudioClip>("knifePickup1");
+        singleBreathSound1 = Resources.Load<AudioClip>("singleBreath1");
+        singleBreathSound2 = Resources.Load<AudioClip>("singleBreath2");
     }
 
     void OnGUI()
@@ -120,7 +124,7 @@ public class Crosshair : MonoBehaviour {
             if ((hitInfo.collider.name == "WomanPicture") && Input.GetButtonDown("Interact"))
             {
                 modalPanel.Choice("Who is this woman? I recognize her..", 2f, 1f);
-                audioSource.PlayOneShot(breathingSound2, 0.7f);
+                audioSource.PlayOneShot(singleBreathSound2, 0.3f);
             }
 
             // If you target a TableLamp -> turn on/off
@@ -152,15 +156,14 @@ public class Crosshair : MonoBehaviour {
             {
                 modalPanel.Choice("I remember I used to sit here.. why are there two chairs?", 3f, 1f);
                 GameObject.Find("Light_Livingroom").GetComponent<LightFlicker>().flicker();
-                audioSource.PlayOneShot(breathingSound1, 0.7f);
+                audioSource.PlayOneShot(singleBreathSound1, 0.3f);
             }
 
             // If you target the knife on the desk in the workroom
             if ((hitInfo.collider.name == "Knife") && Input.GetButtonDown("Interact"))
             {
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKnife();
-                audioSource.clip = itemPickupSound;
-                audioSource.Play();
+                audioSource.PlayOneShot(knifePickupSound, 0.7f);
                 GameObject.Find("Knife").SetActive(false);
                 modalPanel.Choice("A knife..", 3f, 1f);
             }
@@ -184,6 +187,7 @@ public class Crosshair : MonoBehaviour {
             {
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKeyBasement();
                 modalPanel.Choice("A key. Where does this lead?", 3f, 1f);
+                audioSource.PlayOneShot(keyPickupSound, 0.8f);
             }
 
             // If you target the desk in the workroom
