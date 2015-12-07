@@ -51,6 +51,7 @@ public class BedroomDarknessTrigger : MonoBehaviour
         if (!GameObject.Find("Inventory").GetComponent<Inventory>().hasFlashlight())
         {
             audioSource.PlayOneShot(breathing, 0.8f);
+            GameObject.Find("Wardrobe").GetComponent<AudioSource>().Play();
 
             yield return new WaitForSeconds(12.0f);
             GameObject.Find("Camera").GetComponent<jumpScare>().scareStart();

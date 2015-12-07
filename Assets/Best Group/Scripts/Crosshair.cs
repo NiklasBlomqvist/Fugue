@@ -13,6 +13,7 @@ public class Crosshair : MonoBehaviour {
     private RaycastHit hitInfo;
 
     private ModalPanel modalPanel;
+    private EndPanel endPanel;
 
     public AudioSource audioSource;
     private AudioClip lampOnSound;
@@ -29,6 +30,7 @@ public class Crosshair : MonoBehaviour {
     void Awake()
     {
         modalPanel = ModalPanel.Instance();
+        endPanel = EndPanel.Instance();
         lampOnSound = Resources.Load<AudioClip>("lampOn");
         lampOffSound = Resources.Load<AudioClip>("lampOff");
         doorLockedSound = Resources.Load<AudioClip>("doorLocked");
@@ -174,6 +176,7 @@ public class Crosshair : MonoBehaviour {
                 if(GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
                 {
                     GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
+                    endPanel.ShowEndCard("Placeholder text, this should be about how you died becausae you opened the wardrobe.", 3f, 5f, 0f);
                 }
 
                 else

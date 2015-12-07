@@ -4,11 +4,11 @@ using UnityEngine.Events;
 using System.Collections;
 
 //  This script will be updated in Part 2 of this 2 part series.
-public class ModalPanel : MonoBehaviour
+public class EndPanel : MonoBehaviour
 {
 
     public Text question;
-    public GameObject modalPanelObject;
+    public GameObject endPanelObject;
     public Canvas canvas;
     private CanvasGroup cg;
 
@@ -16,19 +16,20 @@ public class ModalPanel : MonoBehaviour
 
     private float displayTime;
     private float fadeTime;
+    private float startTime;
 
-    private static ModalPanel modalPanel;
+    private static EndPanel endPanel;
 
-    public static ModalPanel Instance()
+    public static EndPanel Instance()
     {
-        if (!modalPanel)
+        if (!endPanel)
         {
-            modalPanel = FindObjectOfType(typeof(ModalPanel)) as ModalPanel;
-            if (!modalPanel)
-                Debug.LogError("There needs to be one active ModalPanel script on a GameObject in your scene.");
+            endPanel = FindObjectOfType(typeof(EndPanel)) as EndPanel;
+            if (!endPanel)
+                Debug.LogError("There needs to be one active EndPanel script on a GameObject in your scene.");
         }
 
-        return modalPanel;
+        return endPanel;
     }
 
     void Awake()
@@ -37,12 +38,13 @@ public class ModalPanel : MonoBehaviour
     }
 
     // Yes/No/Cancel: A string, a Yes event, a No event and Cancel event
-    public void Choice(string question, float dispTime, float fdTime)
+    public void ShowEndCard(string question, float stTime, float dispTime, float fdTime)
     {
-        modalPanelObject.SetActive(true);
+        
 
         this.displayTime = dispTime;
         this.fadeTime = fdTime;
+        this.startTime = stTime;
 
         this.question.text = question;
 
@@ -63,22 +65,16 @@ public class ModalPanel : MonoBehaviour
     IEnumerator FadeAlpha()
     {
         cg.alpha = 1;
-
+        yield return new WaitForSeconds(startTime);
+        endPanelObject.SetActive(true);
         yield return new WaitForSeconds(displayTime);
 
-        while (cg.alpha > 0)
-        {
-            cg.alpha -= Time.deltaTime / fadeTime;
-
-            yield return null;
-        }
-        ClosePanel();
-
+        Application.LoadLevel(0);
         yield return null;
     }
 
     void ClosePanel()
     {
-        modalPanelObject.SetActive(false);
+        endPanelObject.SetActive(false);
     }
 }
