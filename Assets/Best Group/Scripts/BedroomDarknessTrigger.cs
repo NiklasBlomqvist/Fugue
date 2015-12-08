@@ -8,7 +8,9 @@ public class BedroomDarknessTrigger : MonoBehaviour
     public AudioSource audioSource;
     private AudioClip scream;
     private AudioClip breathing;
-    
+    private EndPanel endPanel;
+
+
 
     // Use this for initialization
     void Start()
@@ -16,6 +18,7 @@ public class BedroomDarknessTrigger : MonoBehaviour
         scream = Resources.Load<AudioClip>("scream");
         breathing = Resources.Load<AudioClip>("rampBreathing2");
         originalAmbientIntensity = RenderSettings.ambientIntensity;
+        endPanel = EndPanel.Instance();
     }
 
     // Update is called once per frame
@@ -56,7 +59,7 @@ public class BedroomDarknessTrigger : MonoBehaviour
             yield return new WaitForSeconds(12.0f);
             GameObject.Find("Camera").GetComponent<jumpScare>().scareStart();
 
-            GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
+            endPanel.ShowEndCard("Placeholder text, this is an ending where you died", 3f, 5f, 0f);
 
         }
 

@@ -28,6 +28,8 @@ public class BasementTrigger2 : MonoBehaviour
             GameObject.Find("BasementDoor2").GetComponent<OpenDoor>().closeThisDoor();
             triggerHappened = true;
 
+            GameObject.Find("Camera").GetComponent<Crosshair>().setInteract(true);
+
             StartCoroutine(triggerDarkness());
 
         }
@@ -45,6 +47,10 @@ public class BasementTrigger2 : MonoBehaviour
         {
             GameObject.Find("Flashlight").GetComponent<Flashlight>().disableFlashlight();
         }
+
+        // Enable the point light on the chair
+        GameObject.Find("HangLight").GetComponent<LightFlicker>().flicker();
+
     }
 
 }

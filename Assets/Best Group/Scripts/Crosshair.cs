@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Crosshair : MonoBehaviour {
+public class Crosshair : MonoBehaviour
+{
 
     public Texture2D crosshairTextureNonActive;
     public Texture2D crosshairTextureActive;
@@ -25,6 +26,11 @@ public class Crosshair : MonoBehaviour {
     private AudioClip singleBreathSound1;
     private AudioClip singleBreathSound2;
 
+    // Values for the chair in the basement
+    private int chairClicked = 0;
+    private bool canIntChair = true;
+    private bool canInteract = false;
+
 
     // Use this for initialization
     void Awake()
@@ -46,7 +52,7 @@ public class Crosshair : MonoBehaviour {
         //if not paused
         if (Time.timeScale != 0)
         {
-            if(crosshairTexture != null)
+            if (crosshairTexture != null)
             {
                 GUI.DrawTexture(new Rect((Screen.width - crosshairTexture.width * crosshairScale) / 2, (Screen.height - crosshairTexture.height * crosshairScale) / 2, crosshairTexture.width * crosshairScale, crosshairTexture.height * crosshairScale), crosshairTexture);
             }
@@ -59,7 +65,8 @@ public class Crosshair : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         // Locks and hides the cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -70,12 +77,13 @@ public class Crosshair : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
         // Saves the vector the fps-controller is pointing at
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
-        if (Physics.Raycast(transform.position, fwd, out hitInfo, 2.5f) && hitInfo.collider.CompareTag("Clickable") && (RenderSettings.ambientIntensity > 0 || (RenderSettings.ambientIntensity == 0 && GameObject.Find("Flashlight").GetComponent<Flashlight>().isOn())))
+        if (Physics.Raycast(transform.position, fwd, out hitInfo, 2.5f) && hitInfo.collider.CompareTag("Clickable") && (RenderSettings.ambientIntensity > 0 || (RenderSettings.ambientIntensity == 0 && GameObject.Find("Flashlight").GetComponent<Flashlight>().isOn()) || canInteract))
         {
             // Updates the crosshair if the ray hits a object tagged "Clickable"
             crosshairTexture = crosshairTextureActive;
@@ -84,7 +92,7 @@ public class Crosshair : MonoBehaviour {
             if ((hitInfo.collider.name == "doors_wing_a") && Input.GetButtonDown("Interact"))
             {
                 // If that door is the basement door
-                if(hitInfo.collider.transform.parent.name == "BasementDoor")
+                if (hitInfo.collider.transform.parent.name == "BasementDoor")
                 {
                     // And you have the key
                     if (GameObject.Find("Inventory").GetComponent<Inventory>().hasKeyBasement())
@@ -132,7 +140,7 @@ public class Crosshair : MonoBehaviour {
             // If you target a TableLamp -> turn on/off
             if ((hitInfo.collider.name == "TableLamp") && Input.GetButtonDown("Interact"))
             {
-                if(!hitInfo.collider.GetComponentInChildren<Light>().enabled)
+                if (!hitInfo.collider.GetComponentInChildren<Light>().enabled)
                 {
                     audioSource.PlayOneShot(lampOnSound, 0.4f);
                 }
@@ -173,10 +181,10 @@ public class Crosshair : MonoBehaviour {
             // If you target the wardrobe in the bedroom
             if ((hitInfo.collider.name == "Wardrobe") && Input.GetButtonDown("Interact"))
             {
-                if(GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
+                if (GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
                 {
                     GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
-                    endPanel.ShowEndCard("Placeholder text, this should be about how you died becausae you opened the wardrobe.", 3f, 5f, 0f);
+                    endPanel.ShowEndCard("Placeholder text, this is the ending where you killed your wife", 3f, 5f, 0f);
                 }
 
                 else
@@ -199,14 +207,56 @@ public class Crosshair : MonoBehaviour {
                 modalPanel.Choice("I used to sit here and work..", 3f, 1f);
             }
 
+            // If you target the chair in the basement 
+            if ((hitInfo.collider.name == "HangChair") && Input.GetButtonDown("Interact"))
+            {
+                if (chairClicked == 0 && canIntChair)
+                {
+                    modalPanel.Choice("Did I hang myself here..?", 3f, 1f);
+                    canIntChair = false;
+                    StartCoroutine(chairClickedNext());
 
+                }
+                else if (chairClicked == 1 && canIntChair)
+                {
+                    modalPanel.Choice("Is this how it ended?", 3f, 1f);
+                    canIntChair = false;
+                    StartCoroutine(chairClickedNext());
+
+                }
+                else if (chairClicked == 2 && canIntChair)
+                {
+                    modalPanel.Choice("No going back now..", 3f, 1f);
+                    canIntChair = false;
+                    StartCoroutine(chairClickedNext());
+                }
+                else if (chairClicked == 3 && canIntChair)
+                {
+                    GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
+                    endPanel.ShowEndCard("Placeholder text, this should be about how you hanged yourself", 3f, 5f, 0f);
+                }
+
+            }
 
         }
-        else {
+        else
+        {
 
             // Updates the crosshair if the ray doesn't hit an object tagged "Clickable"
             crosshairTexture = crosshairTextureNonActive;
         }
 
+    }
+
+    IEnumerator chairClickedNext()
+    {
+        yield return new WaitForSeconds(4.0f);
+        chairClicked += 1;
+        canIntChair = true;
+    }
+
+    public void setInteract(bool val)
+    {
+        canInteract = val;
     }
 }

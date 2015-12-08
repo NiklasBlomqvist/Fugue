@@ -44,6 +44,5 @@ public class LightFlicker : MonoBehaviour {
         yield return new WaitForSeconds(0.7f);
         theLight.enabled = !theLight.enabled;
 
-
     }
 }
