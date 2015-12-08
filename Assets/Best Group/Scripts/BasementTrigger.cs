@@ -22,7 +22,18 @@ public class BasementTrigger : MonoBehaviour {
             GameObject.Find("BasementDoor2").GetComponent<OpenDoor>().closeThisDoor();
             GameObject.Find("BasementDoor2").GetComponent<OpenDoor>().unlockDoor();
             triggerHappened = true;
+
+            StartCoroutine(waitToDisappear());
+
         }
 
     }
+
+    IEnumerator waitToDisappear()
+    {
+        yield return new WaitForSeconds(1.0f);
+        GameObject.Find("Man").SetActive(false);
+
+    }
+
 }
