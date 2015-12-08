@@ -3,9 +3,10 @@ using System.Collections;
 
 public class Flashlight : MonoBehaviour {
     private Light flashlight;
-    public bool flashlightOn = false;
+    private bool flashlightOn = false;
     AudioSource lightOn;
     AudioSource lightOff;
+    private bool flashlightFunctioning = true;
 
     // Use this for initialization
     void Start () {
@@ -22,7 +23,7 @@ public class Flashlight : MonoBehaviour {
         if (Input.GetButtonDown("Flashlight"))
         {
             // If you have a flashlight in your inventory
-            if (GameObject.Find("Inventory").GetComponent<Inventory>().hasFlashlight())
+            if (GameObject.Find("Inventory").GetComponent<Inventory>().hasFlashlight() && flashlightFunctioning)
             {
                 // Toggle the flashlight
                 flashlight.enabled = !flashlight.enabled;
@@ -70,5 +71,30 @@ public class Flashlight : MonoBehaviour {
     public bool isOn()
     {
         return flashlightOn;
+    }
+
+    public void disableFlashlight()
+    {
+        if(flashlightOn)
+        {
+            // Toggle the flashlight
+            flashlight.enabled = !flashlight.enabled;
+            flashlightOn = !flashlightOn;
+
+            flashlightFunctioning = false;
+        }
+
+    }
+
+    public void enableFlashlight()
+    {
+        if (!flashlightOn)
+        {
+            // Toggle the flashlight
+            flashlight.enabled = !flashlight.enabled;
+            flashlightOn = !flashlightOn;
+
+            flashlightFunctioning = true;
+        }
     }
 }
