@@ -100,6 +100,10 @@ public class Crosshair : MonoBehaviour
                         hitInfo.collider.GetComponentInParent<OpenDoor>().unlockDoor();
                     }
                 }
+                if(hitInfo.collider.transform.parent.name == "BedroomDoor")
+                {
+                    modalPanel.Choice("I feel cold.. is she here?", 3f, 1f);
+                }
                 if (!hitInfo.collider.GetComponentInParent<OpenDoor>().isLocked())
                 {
                     hitInfo.collider.GetComponentInParent<OpenDoor>().openDoor();
@@ -112,28 +116,16 @@ public class Crosshair : MonoBehaviour
                 }
             }
 
-            // If you target Cube1
-            if ((hitInfo.collider.name == "Cube1") && Input.GetButtonDown("Interact"))
-            {
-                GameObject.Find("Player").GetComponent<PlayerController>().restart();
-            }
-
-            // If you target flickerCube
-            if ((hitInfo.collider.name == "FlickerCube") && Input.GetButtonDown("Interact"))
-            {
-                print("FlickerCube");
-            }
-
             // If you target bookStand_Hall
             if ((hitInfo.collider.name == "bookStand_Hall") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("I never read any books..", 2f, 1f);
+                modalPanel.Choice("She used to read.", 2f, 1f);
             }
 
             // If you target Picture of woman in Guestroom
             if ((hitInfo.collider.name == "WomanPicture") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("Who is this woman? I recognize her..", 2f, 1f);
+                modalPanel.Choice("This is her.", 2f, 1f);
                 audioSource.PlayOneShot(singleBreathSound2, 0.3f);
             }
 
@@ -153,7 +145,7 @@ public class Crosshair : MonoBehaviour
             }
 
             // If you target the Drawer in workroom (get flashlight)
-            if ((hitInfo.collider.name == "FlashlightDrawer") && Input.GetButtonDown("Interact"))
+            if ((hitInfo.collider.name == "FlashlightDrawer") && Input.GetButtonDown("Interact") && !GameObject.Find("Inventory").GetComponent<Inventory>().hasFlashlight())
             {
                 modalPanel.Choice("A flashlight. This could become useful.", 3f, 1f);
                 audioSource.clip = itemPickupSound;
@@ -164,7 +156,7 @@ public class Crosshair : MonoBehaviour
             // If you target the armchairs in the livingroom
             if ((hitInfo.collider.name == "Armchair_Livingroom") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("I remember I used to sit here.. why are there two chairs?", 3f, 1f);
+                modalPanel.Choice("I remember I used to sit here.. with her..", 3f, 1f);
                 GameObject.Find("Light_Livingroom").GetComponent<LightFlicker>().flicker();
                 audioSource.PlayOneShot(singleBreathSound1, 0.3f);
             }
@@ -175,26 +167,18 @@ public class Crosshair : MonoBehaviour
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKnife();
                 audioSource.PlayOneShot(knifePickupSound, 0.7f);
                 GameObject.Find("Knife").SetActive(false);
-                modalPanel.Choice("A knife..", 3f, 1f);
+                modalPanel.Choice("This is what I killed her with. Maybe now she can't keep from leaving my own home..", 5f, 1f);
+
             }
 
             // If you target the wardrobe in the bedroom
             if ((hitInfo.collider.name == "Wardrobe") && Input.GetButtonDown("Interact"))
             {
-                if (GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
-                {
-                    GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
-                    endPanel.ShowEndCard("Placeholder text, this is the ending where you killed your wife", 3f, 5f, 0f);
-                }
-
-                else
-                {
-                    modalPanel.Choice("There's something in there..", 3f, 1f);
-                }
+                modalPanel.Choice("I hear something in there.. I remember a knife.. and blood.", 3f, 1f);
             }
 
             // If you target the right door in the desk in the workroom
-            if ((hitInfo.collider.name == "Workroom_Desk_RightDoor") && Input.GetButtonDown("Interact"))
+            if ((hitInfo.collider.name == "Workroom_Desk_RightDoor") && Input.GetButtonDown("Interact") && !GameObject.Find("Inventory").GetComponent<Inventory>().hasKeyBasement())
             {
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKeyBasement();
                 modalPanel.Choice("A key. Where does this lead?", 3f, 1f);
@@ -212,14 +196,14 @@ public class Crosshair : MonoBehaviour
             {
                 if (chairClicked == 0 && canIntChair)
                 {
-                    modalPanel.Choice("Did I hang myself here..?", 3f, 1f);
+                    modalPanel.Choice("I need to get away from her.", 3f, 1f);
                     canIntChair = false;
                     StartCoroutine(chairClickedNext());
 
                 }
                 else if (chairClicked == 1 && canIntChair)
                 {
-                    modalPanel.Choice("Is this how it ended?", 3f, 1f);
+                    modalPanel.Choice("Hanging myself is the only way.", 3f, 1f);
                     canIntChair = false;
                     StartCoroutine(chairClickedNext());
 
@@ -233,9 +217,26 @@ public class Crosshair : MonoBehaviour
                 else if (chairClicked == 3 && canIntChair)
                 {
                     GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
-                    endPanel.ShowEndCard("Placeholder text, this should be about how you hanged yourself", 3f, 5f, 0f);
+                    endPanel.ShowEndCard("I couldn't stand it anymore, being stuck in this house with her presence. They said 'until death do us part' and I hope my death will ensure that.", 0f, 8f, 0f);
                 }
 
+            }
+
+            // If you target the front door
+            if ((hitInfo.collider.name == "FrontDoor") && Input.GetButtonDown("Interact"))
+            {
+                if(GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
+                {
+                    GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
+                    endPanel.ShowEndCard("“I finally escaped..”", 0f, 5f, 0f);
+                }
+                else
+                {
+                    modalPanel.Choice("It's locked, I cannot escape..", 3f, 1f);
+                    // Play "cannot open sound"
+                    audioSource.clip = doorLockedSound;
+                    audioSource.Play();
+                }
             }
 
         }

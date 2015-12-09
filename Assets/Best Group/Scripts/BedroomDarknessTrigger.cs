@@ -8,6 +8,8 @@ public class BedroomDarknessTrigger : MonoBehaviour
     public AudioSource audioSource;
     private AudioClip scream;
     private AudioClip breathing;
+
+    private ModalPanel modalPanel;
     private EndPanel endPanel;
 
 
@@ -18,6 +20,8 @@ public class BedroomDarknessTrigger : MonoBehaviour
         scream = Resources.Load<AudioClip>("scream");
         breathing = Resources.Load<AudioClip>("rampBreathing2");
         originalAmbientIntensity = RenderSettings.ambientIntensity;
+
+        modalPanel = ModalPanel.Instance();
         endPanel = EndPanel.Instance();
     }
 
@@ -55,11 +59,13 @@ public class BedroomDarknessTrigger : MonoBehaviour
         {
             audioSource.PlayOneShot(breathing, 0.8f);
             GameObject.Find("Wardrobe").GetComponent<AudioSource>().Play();
+            modalPanel.Choice("Was that.. the door to the wardrobe?", 2f, 1f);
 
             yield return new WaitForSeconds(12.0f);
             GameObject.Find("Camera").GetComponent<jumpScare>().scareStart();
 
-            endPanel.ShowEndCard("Placeholder text, this is an ending where you died", 3f, 5f, 0f);
+            GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
+            endPanel.ShowEndCard("I couldn't flee, I couldn't fight her.. now I'm stuck here with her here.. forever", 1.0f, 5f, 0f);
 
         }
 
