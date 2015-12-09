@@ -4,17 +4,24 @@ using System.Collections;
 public class Flashlight : MonoBehaviour {
     private Light flashlight;
     private bool flashlightOn = false;
-    AudioSource lightOn;
-    AudioSource lightOff;
+    //AudioSource lightOn;
+    //AudioSource lightOff;
+    public AudioSource audioSource;
+    private AudioClip lightOn;
+    private AudioClip lightOff;
+    private AudioClip flickerOn;
+    private AudioClip flickerOff;
+
     private bool flashlightFunctioning = true;
 
     // Use this for initialization
     void Start () {
         // Gets the flashlight
         flashlight = GameObject.Find("Flashlight").GetComponent<Light>();
-        AudioSource[] audios = GetComponents<AudioSource>();
-        lightOn = audios[0];
-        lightOff = audios[1];
+        lightOn = Resources.Load<AudioClip>("flashlightOn");
+        lightOff = Resources.Load<AudioClip>("flashlightOff");
+        flickerOn = Resources.Load<AudioClip>("flickerOn");
+        flickerOff = Resources.Load<AudioClip>("flickerOff");
     }
 
     // Update is called once per frame
@@ -31,11 +38,13 @@ public class Flashlight : MonoBehaviour {
 
                 if(flashlight.enabled)
                 {
-                    lightOn.Play();
+                    audioSource.clip = lightOn;
+                    audioSource.Play();
                 }
                 else
                 {
-                    lightOff.Play();
+                    audioSource.clip = lightOff;
+                    audioSource.Play();
                 }
             }
 
@@ -55,16 +64,27 @@ public class Flashlight : MonoBehaviour {
     IEnumerator flickerWait()
     {
         flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
         yield return new WaitForSeconds(0.8f);
+
         flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
         yield return new WaitForSeconds(0.6f);
+
         flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
         yield return new WaitForSeconds(0.3f);
+
         flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
         yield return new WaitForSeconds(0.4f);
+
         flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
         yield return new WaitForSeconds(0.6f);
+
         flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
 
     }
 
