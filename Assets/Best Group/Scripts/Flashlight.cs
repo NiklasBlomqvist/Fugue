@@ -63,6 +63,50 @@ public class Flashlight : MonoBehaviour {
 
     IEnumerator flickerWait()
     {
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
+        yield return new WaitForSeconds(0.8f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
+        yield return new WaitForSeconds(0.1f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
+        yield return new WaitForSeconds(0.8f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
+        yield return new WaitForSeconds(0.1f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
+        yield return new WaitForSeconds(0.2f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
+        yield return new WaitForSeconds(0.3f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
+        yield return new WaitForSeconds(0.8f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
+        yield return new WaitForSeconds(0.1f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOff);
+        yield return new WaitForSeconds(0.8f);
+
+        flashlight.enabled = !flashlight.enabled;
+        audioSource.PlayOneShot(flickerOn);
+        yield return new WaitForSeconds(0.1f);
+
+
+
+        /*
         flashlight.enabled = !flashlight.enabled;
         audioSource.PlayOneShot(flickerOff);
         yield return new WaitForSeconds(0.8f);
@@ -85,6 +129,7 @@ public class Flashlight : MonoBehaviour {
 
         flashlight.enabled = !flashlight.enabled;
         audioSource.PlayOneShot(flickerOn);
+        */
 
     }
 
