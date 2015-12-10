@@ -43,14 +43,15 @@ public class PlayerController : MonoBehaviour {
                 moveDirection = transform.TransformDirection(moveDirection);
             }
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            /*if (Input.GetKey(KeyCode.LeftShift))
             {
                 moveDirection = moveDirection * runSpeed;
             }
             else
             {
-                moveDirection = moveDirection * walkSpeed;
-            }
+            }*/
+
+            moveDirection = moveDirection * walkSpeed;
 
             // Jumping
             if (Input.GetButton("Jump"))

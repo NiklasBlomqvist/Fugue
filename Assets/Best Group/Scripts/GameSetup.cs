@@ -7,7 +7,7 @@ public class GameSetup : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        GameObject.Find("Plane").GetComponent<Fade>().fadeIn(1f, false);
+        GameObject.Find("Plane").GetComponent<Fade>().fadeIn(2f, false);
         shown = false;
     }
 	
