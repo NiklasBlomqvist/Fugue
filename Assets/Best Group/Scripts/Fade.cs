@@ -44,7 +44,7 @@ public class Fade : MonoBehaviour {
 
     private void setCanCtrl(bool on)
     {
-        GameObject.Find("Player").GetComponent<PlayerController> ().enabled = on;
+        GameObject.Find("Player").GetComponent<PlayerSound> ().enabled = on;
         GameObject.Find("Camera").GetComponent<CameraMovement>().enabled = on;
         ctrlIsRestricted = !on;
     }
@@ -67,13 +67,7 @@ public class Fade : MonoBehaviour {
         
         
         
-        if (timer <= 0)
-        {
-            isFadingIn = false;
-            isFadingOut = false;
-            timer = timerStart;
-            setCanCtrl(true);
-        }
+        
 
 
     }
@@ -85,6 +79,13 @@ public class Fade : MonoBehaviour {
         color.a = timer / timerStart;
         GetComponent<Renderer>().material.color = color;
 
+        if (timer <= 0)
+        {
+            isFadingIn = false;
+            isFadingOut = false;
+            timer = timerStart;
+            setCanCtrl(true);
+        }
 
     }
 
@@ -95,6 +96,12 @@ public class Fade : MonoBehaviour {
         color.a = 1 - (timer / timerStart);
         GetComponent<Renderer>().material.color = color;
 
+        if (timer <= 0)
+        {
+            isFadingIn = false;
+            isFadingOut = false;
+            timer = timerStart;
+        }
 
     }
 }

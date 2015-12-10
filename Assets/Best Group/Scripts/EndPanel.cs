@@ -40,7 +40,9 @@ public class EndPanel : MonoBehaviour
     // Yes/No/Cancel: A string, a Yes event, a No event and Cancel event
     public void ShowEndCard(string question, float stTime, float dispTime, float fdTime)
     {
-        
+
+        GameObject.Find("Camera").GetComponent<Crosshair>().crosshairTextureActive = null;
+        GameObject.Find("Camera").GetComponent<Crosshair>().crosshairTextureNonActive = null;
 
         this.displayTime = dispTime;
         this.fadeTime = fdTime;

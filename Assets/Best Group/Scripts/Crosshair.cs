@@ -167,7 +167,7 @@ public class Crosshair : MonoBehaviour
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKnife();
                 audioSource.PlayOneShot(knifePickupSound, 0.7f);
                 GameObject.Find("Knife").SetActive(false);
-                modalPanel.Choice("This is what I killed her with. Maybe now she can't keep from leaving my own home..", 5f, 1f);
+                modalPanel.Choice("This is what I killed her with. Maybe now she can't keep me from leaving my own home..", 5f, 1f);
 
             }
 
@@ -228,7 +228,7 @@ public class Crosshair : MonoBehaviour
                 if(GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
                 {
                     GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
-                    endPanel.ShowEndCard("“I finally escaped..”", 0f, 5f, 0f);
+                    endPanel.ShowEndCard("“I finally escaped..”", 2f, 8f, 0f);
                 }
                 else
                 {
