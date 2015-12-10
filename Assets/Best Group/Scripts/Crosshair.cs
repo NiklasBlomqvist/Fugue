@@ -102,7 +102,7 @@ public class Crosshair : MonoBehaviour
                 }
                 if(hitInfo.collider.transform.parent.name == "BedroomDoor")
                 {
-                    modalPanel.Choice("I feel cold.. is she here?", 3f, 1f);
+                    modalPanel.Choice("I feel cold... Is she here?", 3f, 1f);
                 }
                 if (!hitInfo.collider.GetComponentInParent<OpenDoor>().isLocked())
                 {
@@ -156,7 +156,7 @@ public class Crosshair : MonoBehaviour
             // If you target the armchairs in the livingroom
             if ((hitInfo.collider.name == "Armchair_Livingroom") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("I remember I used to sit here.. with her..", 3f, 1f);
+                modalPanel.Choice("I remember I used to sit here... with her...", 3f, 1f); //TODO
                 GameObject.Find("Light_Livingroom").GetComponent<LightFlicker>().flicker();
                 audioSource.PlayOneShot(singleBreathSound1, 0.3f);
             }
@@ -167,14 +167,14 @@ public class Crosshair : MonoBehaviour
                 GameObject.Find("Inventory").GetComponent<Inventory>().pickupKnife();
                 audioSource.PlayOneShot(knifePickupSound, 0.7f);
                 GameObject.Find("Knife").SetActive(false);
-                modalPanel.Choice("This is what I killed her with. Maybe now she can't keep me from leaving my own home..", 5f, 1f);
+                modalPanel.Choice("This is what I killed her with. Maybe now she can't keep me from leaving my own home...", 5f, 1f); //TODO Maybe now she won't be able to keep me from leaving this place...
 
             }
 
             // If you target the wardrobe in the bedroom
             if ((hitInfo.collider.name == "Wardrobe") && Input.GetButtonDown("Interact"))
             {
-                modalPanel.Choice("I hear something in there.. I remember a knife.. and blood.", 3f, 1f);
+                modalPanel.Choice("I hear something in there... I remember a knife... and blood.", 3f, 1f);
             }
 
             // If you target the right door in the desk in the workroom
@@ -203,7 +203,7 @@ public class Crosshair : MonoBehaviour
                 }
                 else if (chairClicked == 1 && canIntChair)
                 {
-                    modalPanel.Choice("Hanging myself is the only way.", 3f, 1f);
+                    modalPanel.Choice("Hanging myself is the only way.", 3f, 1f); //TODO I dont see any other way...
                     canIntChair = false;
                     StartCoroutine(chairClickedNext());
 
@@ -217,7 +217,7 @@ public class Crosshair : MonoBehaviour
                 else if (chairClicked == 3 && canIntChair)
                 {
                     GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
-                    endPanel.ShowEndCard("I couldn't stand it anymore, being stuck in this house with her presence. They said 'until death do us part' and I hope my death will ensure that.", 0f, 8f, 0f);
+                    endPanel.ShowEndCard("I couldn't stand it anymore, being stuck in this house with her presence. They said 'until death do us part' and I hope my death will ensure that.", 2f, 8f, 0f);
                 }
 
             }
@@ -228,11 +228,11 @@ public class Crosshair : MonoBehaviour
                 if(GameObject.Find("Inventory").GetComponent<Inventory>().hasKnife())
                 {
                     GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
-                    endPanel.ShowEndCard("“I finally escaped..”", 2f, 8f, 0f);
+                    endPanel.ShowEndCard("“I finally escaped...”", 2f, 8f, 0f);
                 }
                 else
                 {
-                    modalPanel.Choice("It's locked, I cannot escape..", 3f, 1f);
+                    modalPanel.Choice("It's locked, I cannot escape..", 3f, 1f); //TODO It's locked, I have to look for another way out...
                     // Play "cannot open sound"
                     audioSource.clip = doorLockedSound;
                     audioSource.Play();

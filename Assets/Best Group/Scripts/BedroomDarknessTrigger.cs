@@ -59,13 +59,13 @@ public class BedroomDarknessTrigger : MonoBehaviour
         {
             audioSource.PlayOneShot(breathing, 0.8f);
             GameObject.Find("Wardrobe").GetComponent<AudioSource>().Play();
-            modalPanel.Choice("Was that.. the door to the wardrobe?", 2f, 1f);
+            modalPanel.Choice("Was that... the door to the wardrobe?", 2f, 1f);
 
             yield return new WaitForSeconds(12.0f);
             GameObject.Find("Camera").GetComponent<jumpScare>().scareStart();
 
             GameObject.Find("Plane").GetComponent<Fade>().fadeOut(3f, false);
-            endPanel.ShowEndCard("I couldn't flee, I couldn't fight her.. now I'm stuck here with her here.. forever", 1.0f, 5f, 0f);
+            endPanel.ShowEndCard("I couldn't flee, I couldn't fight her... Now I'm stuck here with her... forever", 2f, 8f, 0f);
 
         }
 
