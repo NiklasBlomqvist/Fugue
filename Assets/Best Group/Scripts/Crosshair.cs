@@ -31,6 +31,9 @@ public class Crosshair : MonoBehaviour
     private bool canIntChair = true;
     private bool canInteract = false;
 
+    // bool for the bedroom door
+    private bool bedroomDoorTriggered = false;
+
 
     // Use this for initialization
     void Awake()
@@ -100,9 +103,10 @@ public class Crosshair : MonoBehaviour
                         hitInfo.collider.GetComponentInParent<OpenDoor>().unlockDoor();
                     }
                 }
-                if(hitInfo.collider.transform.parent.name == "BedroomDoor")
+                if(hitInfo.collider.transform.parent.name == "BedroomDoor" && !bedroomDoorTriggered)
                 {
                     modalPanel.Choice("I feel cold... Is she here?", 3f, 1f);
+                    bedroomDoorTriggered = true;
                 }
                 if (!hitInfo.collider.GetComponentInParent<OpenDoor>().isLocked())
                 {
